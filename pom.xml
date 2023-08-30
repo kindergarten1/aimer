@@ -11,6 +11,7 @@
     </parent>
     <modules>
         <module>cilcil-client</module>
+        <module>cilcil-common</module>
     </modules>
 
     <groupId>aimer</groupId>

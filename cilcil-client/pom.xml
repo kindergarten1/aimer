@@ -11,14 +11,18 @@
     </parent>
 
 
-    <groupId>com.example</groupId>
     <artifactId>cilcil-client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>cilcil-client</name>
     <description>web客户端</description>
 
     <dependencies>
-
+        <dependency>
+            <groupId>aimer</groupId>
+            <artifactId>cilcil-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
