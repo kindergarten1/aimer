@@ -12,6 +12,7 @@
     <modules>
         <module>cilcil-client</module>
         <module>cilcil-common</module>
+        <module>cilcil-resources</module>
     </modules>
 
     <groupId>aimer</groupId>

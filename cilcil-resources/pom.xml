@@ -10,20 +10,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>cilcil-common</artifactId>
+    <artifactId>cilcil-resources</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>cilcil-common</name>
-    <description>cilcil-common</description>
+    <name>cilcil-resources</name>
+    <description>cilcil-resources</description>
 
     <dependencies>
-        <dependency>
-            <groupId>aimer</groupId>
-            <artifactId>cilcil-resources</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
     </dependencies>
-
-
 
 </project>

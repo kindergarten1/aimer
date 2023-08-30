@@ -3,6 +3,7 @@ package com.cilcilclient.userManagement.model.dto;
 
 
 import com.cilcilcommon.unitl.constants.CommonMsg;
+import com.cilcilresources.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -15,7 +16,7 @@ import lombok.Data;
  */
 @Data
 @Schema(name = "LoginDTO", description = "登录信息")
-public class LoginDTO {
+public class LoginDTO extends BaseEntity {
 
     @NotBlank(message = CommonMsg.LOGIN_ACCOUNT_COULD_NOT_BE_NULL)
     @Schema(name = "loginAccount", description = "登录账号")
