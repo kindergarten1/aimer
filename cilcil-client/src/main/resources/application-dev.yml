@@ -1,0 +1,15 @@
+server:
+  port: 9099
+
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/cilicili
+      username: root
+      password: xjk,929686415
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+
+
+
