@@ -2,3 +2,17 @@ spring:
   profiles:
     active: dev
 
+mybatis-plus:
+  global-config:
+    db-config:
+      # 全局字段策略
+      #      NOT_NULL：默认策略，非NULL判断（判断传参为null时，不会更新该字段）
+      #      IGNORED：忽略判断（不去判断传参是否是null，如果传入null，就更新该字段值为null）
+      #      NOT_EMPTY：非空判断（如果传入的参数是“”空字符串或者null，不会插入数据库）
+      insert-strategy: NOT_EMPTY
+      update-strategy: IGNORED
+      # 逻辑删除默认值
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      # 主键类型
+      id-type: assign_uuid

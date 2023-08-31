@@ -3,13 +3,14 @@ server:
 
 spring:
   datasource:
-    druid:
-      url: jdbc:mysql://localhost:3306/cilicili
-      username: root
-      password: xjk,929686415
-      driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cilicili?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: xjk,929686415
 
-
-
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:modules/**/mapper/*Mapper.xml
 
 
