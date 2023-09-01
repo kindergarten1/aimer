@@ -6,11 +6,21 @@ spring:
     url: jdbc:mysql://localhost:3306/cilicili?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: xjk,929686415
+  security:
+    user:
+      name: admin
+      password: admin
 
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
-  mapper-locations: classpath:modules/**/mapper/*Mapper.xml
+
+jwt:
+  config:
+    key: client
+    ttl: 600000
+    remember: 604800000
+    expire: 300000
 
 
