@@ -2,6 +2,7 @@ package com.cilcil.login.config;
 
 import com.cilcil.login.service.UserDetailsServiceImpl;
 import com.cilcil.login.service.UserManagementService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.annotation.Resource;
@@ -17,7 +19,7 @@ import javax.annotation.Resource;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    //@Value("${ignores}") String ignores;
+//    @Value("${ignores}") String ignores;
     @Resource  private UserDetailsServiceImpl userDetailsService;
 
     @Bean
@@ -25,7 +27,7 @@ public class SecurityConfig {
         http.userDetailsService(userDetailsService)
                 .authorizeHttpRequests((authorize) -> authorize
                         //.requestMatchers(ignores).permitAll()//无需授权即可访问的url，多个地址可以这样写。
-//                        .requestMatchers("/swagger-ui/index.html").permitAll()//也可以写一个地址。
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll()//也可以写一个地址。
                         .anyRequest().authenticated())//其它页面需要授权才可以访问。
                 .formLogin(form -> form
                         //.loginPage("/login-form")//自定义的表单，可以不用框架给的默认表单。

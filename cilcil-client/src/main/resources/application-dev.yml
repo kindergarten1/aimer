@@ -17,7 +17,5 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
 
-ignores:
-        - "/swagger-ui/index.html"
 
 
