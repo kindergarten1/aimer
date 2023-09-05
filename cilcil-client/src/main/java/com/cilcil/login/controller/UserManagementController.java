@@ -1,10 +1,10 @@
-package com.cilcil.userManagement.controller;
+package com.cilcil.login.controller;
 
 
 
-import com.cilcil.userManagement.model.dto.LoginDTO;
-import com.cilcil.userManagement.model.dto.UserRegisterDTO;
-import com.cilcil.userManagement.service.UserManagementService;
+import com.cilcil.login.model.dto.LoginDTO;
+import com.cilcil.login.model.dto.UserRegisterDTO;
+import com.cilcil.login.service.UserManagementService;
 import com.cilcil.unitl.response.ResponseVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

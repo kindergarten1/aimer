@@ -1,4 +1,4 @@
-package com.cilcil.userManagement.model.dto;
+package com.cilcil.login.model.dto;
 
 
 

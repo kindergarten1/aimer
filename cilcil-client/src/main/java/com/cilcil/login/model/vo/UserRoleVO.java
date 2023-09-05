@@ -1,4 +1,4 @@
-package com.cilcil.userManagement.model.vo;
+package com.cilcil.login.model.vo;
 
 import lombok.Data;
 

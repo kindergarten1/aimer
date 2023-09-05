@@ -1,4 +1,4 @@
-package com.cilcil.userManagement.model.vo;
+package com.cilcil.login.model.vo;
 
 import com.cilcil.modules.sysuser.entity.SysUser;
 import lombok.AllArgsConstructor;
