@@ -1,5 +1,6 @@
 server:
-  port: 9099
+  port: 9001
+
 
 spring:
   datasource:
@@ -10,12 +11,27 @@ spring:
   security:
     user:
       name: admin
+#      password: 123456
       password: "$2a$10$UUbMgKe4ozOFfcfJcC6KoOQHLixmMNF.Evx.E5/AkidUExBGXuq6m"
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
 
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
 
+
+# springdoc-openapi swagger-项目配置
+springdoc:
+  group-configs:
+    - group: 'client'
+      paths-to-match: '/**'
+      packages-to-scan: com.cilcil
+  swagger-ui:
+    enabled: true
+    groups-order: desc
 
 

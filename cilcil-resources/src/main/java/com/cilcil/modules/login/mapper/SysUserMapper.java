@@ -1,7 +1,7 @@
-package com.cilcil.modules.sysuser.mapper;
+package com.cilcil.modules.login.mapper;
 
-import com.cilcil.modules.sysuser.entity.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cilcil.modules.login.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

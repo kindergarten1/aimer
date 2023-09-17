@@ -18,12 +18,12 @@ import lombok.Data;
 public class LoginDTO{
 
     @NotBlank(message = CommonMsg.LOGIN_ACCOUNT_COULD_NOT_BE_NULL)
-    @Schema(name = "loginAccount", description = "登录账号")
-    private String loginAccount;
+    @Schema(name = "userName", description = "登录账号")
+    private String userName;
 
     @NotBlank(message = CommonMsg.LOGIN_PASSWORD_COULD_NOT_BE_NULL)
-    @Schema(name = "loginPassword", description = "登录密码")
-    private String loginPassword;
+    @Schema(name = "password", description = "登录密码")
+    private String password;
 
 //    @NotBlank(message = CommonMsg.VERIFICATION_CODE_COULD_NOT_BE_NULL)
     @Schema(name = "verificationCode", description = "验证码")

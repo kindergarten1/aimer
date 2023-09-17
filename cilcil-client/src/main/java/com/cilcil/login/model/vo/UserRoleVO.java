@@ -3,9 +3,9 @@ package com.cilcil.login.model.vo;
 import lombok.Data;
 
 /**
- * @Author: izanagi
- * @Date: 2020-06-28 15:38
- * @Description: UserRoleVO
+ * @Author SlyAimer
+ * @Date 2023/9/5 9:35
+ * @Version 1.0
  */
 @Data
 public class UserRoleVO {

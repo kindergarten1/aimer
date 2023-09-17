@@ -1,8 +1,8 @@
-package com.cilcil.modules.sysuser.service;
+package com.cilcil.modules.login.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cilcil.modules.sysuser.entity.SysUser;
+import com.cilcil.modules.login.entity.SysUser;
 
 /**
 * @author Xy

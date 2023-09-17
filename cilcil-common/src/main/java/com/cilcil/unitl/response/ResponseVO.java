@@ -4,12 +4,20 @@ package com.cilcil.unitl.response;
 
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.cilcil.unitl.exception.BaseException;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
+ * 响应类，返回请求后续可以在这编写
  * @Author SlyAimer
  * @Date 2023/8/26 21:28
  * @Version 1.0

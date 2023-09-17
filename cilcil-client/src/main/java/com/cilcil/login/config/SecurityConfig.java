@@ -1,54 +1,94 @@
 package com.cilcil.login.config;
 
+
 import com.cilcil.login.service.UserDetailsServiceImpl;
-import com.cilcil.login.service.UserManagementService;
-import org.springframework.beans.factory.annotation.Value;
+import com.cilcil.modules.login.entity.LoginProperties;
+import com.cilcil.unitl.jwt.AuthenticationFailHandler;
+import com.cilcil.unitl.jwt.AuthenticationSuccessHandler;
+import com.cilcil.unitl.jwt.JwtTokenOncePerRequestFilter;
+import com.cilcil.unitl.security.SecurityUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import javax.annotation.Resource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    @Value("${ignores}") String ignores;
-    @Resource  private UserDetailsServiceImpl userDetailsService;
+    @Autowired private UserDetailsServiceImpl userDetailsService;
+    @Autowired  private LoginProperties loginProperties;
+    @Autowired private AuthenticationSuccessHandler authenticationSuccessHandler;
+    @Autowired private AuthenticationFailHandler authenticationFailHandler;
+    @Autowired private StringRedisTemplate redisTemplate;
+    @Autowired private SecurityUtil securityUtil;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.userDetailsService(userDetailsService)
-                .authorizeHttpRequests((authorize) -> authorize
-                        //.requestMatchers(ignores).permitAll()//无需授权即可访问的url，多个地址可以这样写。
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll()//也可以写一个地址。
-                        .anyRequest().authenticated())//其它页面需要授权才可以访问。
-                .formLogin(form -> form
-                        //.loginPage("/login-form")//自定义的表单，可以不用框架给的默认表单。
-                        .loginProcessingUrl("/login.do")//这个地址就是摆设，给外人看的，只要跟form表单的action一致就好，真正起作用的还是UserDetailsService。
-                        .permitAll()
-                        //.successForwardUrl("/"))
-                        .defaultSuccessUrl("/"))//建议用这个，successForwardUrl只能返回指定页，而这个可以返回来源页，没有来源页才会返回指定页，体验较好。
-                .logout()//注销登录
-                .logoutUrl("/logout")//这个地址也只是给人看的，只要跟前端注销地址一致就可。
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))//主要是指定注销时用什么请求方法，GET和POST都可以吧。
-                .logoutSuccessUrl("/login-form")//注销后要跳转的页面，那个页面一定是不需要授权就可以访问的，否则会出现意外结果。一般是首页，这里随便写的一个页面。
-                .permitAll()
+
+        http
+                .cors()
                 .and()
-                .exceptionHandling().accessDeniedPage("/unAuth.html");//自定义没权限访问的提示页面。
+                .csrf().disable()
+//                .userDetailsService(userDetailsService)
+                .authorizeHttpRequests((authorize) -> authorize
+                        //放行资源
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/user/login")).permitAll()//放行登录接口获取token
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/user/register")).permitAll()//放行注册接口
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll()//swagger首页页面
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/doc.html")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/webjars/**")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/v3/**")).permitAll()//swagger 资源获取请求
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-resources/**")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/configuration/security")).permitAll()
+                        .anyRequest().authenticated())//其它页面需要授权才可以访问。
+                .formLogin(form -> form//登录请求监听
+                        .successHandler(authenticationSuccessHandler).failureHandler(authenticationFailHandler)
+                        )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return username -> userDetailsService.loadUserByUsername(username);
+    }
 
     //密码加密用的，不然没法做密码比对。
     @Bean
     public PasswordEncoder getPwdEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(getPwdEncoder());
+        return authProvider;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public JwtTokenOncePerRequestFilter authenticationJwtTokenFilter() throws Exception {
+        return new JwtTokenOncePerRequestFilter(redisTemplate, securityUtil, loginProperties);
     }
 }
