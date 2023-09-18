@@ -44,11 +44,11 @@ public class UserManagementServiceImpl implements UserManagementService {
     public ResponseVO<?> login(LoginDTO loginDTO) {
 
         //判断登录账号/密码为不为空
-        JudgeParam.paramIsNotNull(loginDTO.getUserName(), CommonMsg.LOGIN_ACCOUNT_COULD_NOT_BE_NULL);
+        JudgeParam.paramIsNotNull(loginDTO.getUsername(), CommonMsg.LOGIN_ACCOUNT_COULD_NOT_BE_NULL);
         JudgeParam.paramIsNotNull(loginDTO.getPassword(), CommonMsg.LOGIN_PASSWORD_COULD_NOT_BE_NULL);
 
         QueryWrapper<SysUser> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username",loginDTO.getUserName());
+        queryWrapper.eq("username",loginDTO.getUsername());
 
         SysUser user = sysUserMapper.selectOne(queryWrapper);
 
@@ -60,7 +60,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                 return ResponseVO.error(CommonMsg.PASSWORD_ERROR);
             }
             //获取token
-            String accessToken = securityUtil.getToken(loginDTO.getUserName(), false);
+            String accessToken = securityUtil.getToken(loginDTO.getUsername(), false);
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(new SecurityUserDetails(user), null, null);
             SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -17,6 +17,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  graphql:
+    cors:
+      allowed-methods: POST,GET,OPTIONS,DELETE,PUT
+      allowed-headers: Access-Control-Allow-Origin,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers
+      allowed-origins: localhost:9005
 
 mybatis-plus:
   configuration:
