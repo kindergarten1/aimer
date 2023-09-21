@@ -4,7 +4,6 @@ import com.cilcil.modules.login.entity.PermissionVO;
 import com.cilcil.modules.login.entity.RoleVO;
 import com.cilcil.modules.login.entity.SysUser;
 import com.cilcil.unitl.JudgeParam;
-import com.cilcil.unitl.constants.CommonMsg;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

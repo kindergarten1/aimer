@@ -2,7 +2,6 @@ package com.cilcil.login.service;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.cilcil.login.service.impl.UserManagementServiceImpl;
 import com.cilcil.modules.login.entity.SysUser;
 import com.cilcil.modules.login.mapper.SysUserMapper;
 import com.cilcil.unitl.JudgeParam;
@@ -10,10 +9,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
