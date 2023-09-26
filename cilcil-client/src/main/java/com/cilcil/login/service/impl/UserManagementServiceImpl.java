@@ -3,23 +3,20 @@ package com.cilcil.login.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cilcil.login.model.dto.LoginDTO;
 import com.cilcil.login.model.dto.UserRegisterDTO;
-
 import com.cilcil.login.model.vo.UserPrincipalVO;
 import com.cilcil.login.service.SecurityUserDetails;
 import com.cilcil.login.service.UserManagementService;
 import com.cilcil.modules.login.entity.SysUser;
+import com.cilcil.modules.login.mapper.SysUserMapper;
 import com.cilcil.unitl.JudgeParam;
 import com.cilcil.unitl.constants.CommonMsg;
 import com.cilcil.unitl.response.ResponseVO;
-import com.cilcil.modules.login.mapper.SysUserMapper;
 import com.cilcil.unitl.security.SecurityUtil;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import javax.annotation.Resource;
 
@@ -57,7 +54,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             // 验证密码准确性
             if (!bCryptPasswordEncoder.matches(loginDTO.getPassword(), user.getPassword())){
                 // 密码错误
-                return ResponseVO.error(CommonMsg.PASSWORD_ERROR);
+                return ResponseVO.error(CommonMsg.ACCOUNT_OR_PASSWORD_ERROR);
             }
             //获取token
             String accessToken = securityUtil.getToken(loginDTO.getUsername(), false);
@@ -69,7 +66,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             return ResponseVO.ok(new UserPrincipalVO(accessToken,null,null,user));
         }
 
-        return ResponseVO.error("查无此人");
+        return ResponseVO.error(CommonMsg.ACCOUNT_OR_PASSWORD_ERROR);
     }
 
     /**

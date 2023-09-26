@@ -19,6 +19,10 @@ public interface UserManagementService {
      */
     ResponseVO<?> login(LoginDTO loginDTO);
 
+    /**
+     * 获取当前登录用户信息
+     * @return
+     */
     ResponseVO<?> getUserInfo();
 
     /**
